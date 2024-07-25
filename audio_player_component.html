@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player Component</title>
+</head>
+<body>
+    <div id="audio-container"></div>
+    <script>
+        function createAudioElement(id, src) {
+            const audioElement = document.createElement('audio');
+            audioElement.id = id;
+            audioElement.src = src;
+            audioElement.type = 'audio/wav';
+            audioElement.style.display = 'none';
+            document.getElementById('audio-container').appendChild(audioElement);
+
+            const playLink = document.createElement('a');
+            playLink.href = '#';
+            playLink.innerText = 'Play Audio';
+            playLink.onclick = function () {
+                document.getElementById(id).play();
+                return false;
+            };
+
+            document.getElementById('audio-container').appendChild(playLink);
+            document.getElementById('audio-container').appendChild(document.createElement('br'));
+        }
+
+        // Get the data from Streamlit
+        const data = JSON.parse(document.currentScript.getAttribute('data'));
+        data.forEach(item => createAudioElement(item.id, item.src));
+    </script>
+</body>
+</html>
